@@ -76,7 +76,7 @@ jobs:
           for ai in ${AIS}; do
             for platform in ${PLATFORMS}; do
               echo "Building ${ai}-${platform}..."
-              python build.py ${ai} ${platform}
+              python build_novelkit.py ${ai} ${platform}
               
               if [ -d "dist/${ai}-${platform}" ]; then
                 cd dist/${ai}-${platform}
@@ -106,33 +106,7 @@ jobs:
           files: .genreleases/*.zip
           tag_name: ${{ steps.get_version.outputs.version }}
           name: Release ${{ steps.get_version.outputs.version }}
-          body: |
-            ## NovelKit ${{ steps.get_version.outputs.version }}
-            
-            ### 构建产物
-            
-            本版本包含以下 AI 环境的构建产物：
-            
-            - 支持的 AI 环境：${{ steps.get_ais.outputs.ais }}
-            - 支持的平台：${{ steps.get_ais.outputs.platforms }}
-            
-            构建产物命名格式：`novel-kit-{ai-env}-{platform}-{version}.zip`
-            
-            ### 使用方法
-            
-            ```bash
-            # 安装 CLI
-            pip install novel-kit-cli
-            
-            # 初始化项目（会自动下载构建产物）
-            novel-kit init my-novel --ai cursor
-            ```
-            
-            ### 注意
-            
-            GitHub 自动生成的 Source code 归档包含完整源码，主要用于开发。
-            请使用上述构建产物 ZIP 文件进行项目初始化。
-          draft: false
+          draft: true
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
