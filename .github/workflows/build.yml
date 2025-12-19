@@ -64,7 +64,7 @@ jobs:
           
           for ai in ${AIS}; do
             echo "Building ${ai}-${PLATFORM}..."
-            python build.py ${ai} ${PLATFORM}
+            python build_novelkit.py ${ai} ${PLATFORM}
           done
           
       - name: Verify build output
